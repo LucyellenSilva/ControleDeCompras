@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Lista de compras</title>
+	<link rel="stylesheet" type="text/css" href="Public/css/bootstrap.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+			<a id="navTitle" class="navbar-brand" href="index.html"></a>
+	    </div>
+	  </div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control" id="desc" placeholder="Description">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="amount" placeholder="amount">
+			</div>
+			<div class="form-group">
+				<input type="text" class="form-control" id="value" placeholder="value">
+			</div>
+			<span id="btnUpdate" style="display: none">
+				<span id="inputIdUpdate"></span>
+				<button onclick="updateData();" class="btn btn-default">Save</button>
+				<button onclick="resetForm();" class="btn btn-default">Cancel</button>
+			</span>
+			<button id="btnAdd" onclick="addData();" class="btn btn-default">Add</button>
+		</div>
+
+		<div id="errors" style="display:none"></div>
+		<div class="table-responsive">
+			<table class="table" id="listTable"></table>
+		</div>
+	</div>
+
+	<script src="Public/js/config.js"></script>
+	<script src="Public/js/main.js"></script>
+</body>
+</html>
