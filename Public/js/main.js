@@ -56,15 +56,17 @@ function formatValue(value)
 
 function addData()
 {
-
     var desc = document.getElementById("desc").value;
     var amount = document.getElementById("amount").value;
     var value = document.getElementById("value").value;
 
-    list.unshift({"desc" : desc, "amount" : amount, "value" : value});
-
-    if(!validade()){
+    if( validade() == 0){
         return false;
+    }else{
+        list.unshift({"desc" : desc, "amount" : amount, "value" : value});
+        document.getElementById("desc").style.borderColor = "";
+        document.getElementById("amount").style.borderColor = "";
+        document.getElementById("value").style.borderColor = "";
     }
 
     setList(list);
@@ -105,10 +107,13 @@ function updateData()
     var amount = document.getElementById("amount").value;
     var value = document.getElementById("value").value;
 
-    list[id] = {"desc" : desc, "amount" : amount, "value" : value};
-
-    if(!validade()){
-        return;
+    if( validade() == 0){
+        return false;
+    }else{
+        list[id] = {"desc" : desc, "amount" : amount, "value" : value};
+        document.getElementById("desc").style.borderColor = "";
+        document.getElementById("amount").style.borderColor = "";
+        document.getElementById("value").style.borderColor = "";
     }
 
     resetForm();
@@ -144,37 +149,35 @@ function validade()
     var errors = "";
 
     if (desc === ""){
-        errors += '<p>Fill out description</p>';
+        errors = true;
+        document.getElementById("desc").style.borderColor = "red";
+
+    }
+    if (amount === "" || amount != parseInt(amount)){
+
+        errors = true;
+        document.getElementById("amount").style.borderColor = "red";
+
     }
 
-    if (amount === ""){
-        errors += '<p> Fill out amount </p>';
+    if( value === ""){
 
-    }else if (amount != parseInt(amount)){
-        errors += '<p> Fill out a valid amount </p>';
+        errors = true;
+        document.getElementById("value").style.borderColor = "red";
+
     }
 
-    if(value != parseFloat(value)){
-        errors += '<p> Fill out value </p>';
-
-    }else if (value === ""){
-        errors += '<p> Fill out a valid value </p>';
-    }
-
-    if (errors !== ""){
-        document.getElementById("errors").innerHTML = "<h3>Error:</h3>" + errors;
-
-        document.getElementById("errors").style.display = "block";
+    if (errors == true){
+        document.getElementById("errors").style.display = "inline-block";
+        document.getElementById("errors").style.backgroundColor = "rgba(85, 85, 85, 0.3)";
+        document.getElementById("errors").style.color = "white";
+        document.getElementById("errors").style.padding = "10px";
+        document.getElementById("errors").style.margin = "10px";
+        document.getElementById("errors").style.borderRadius = "13px";
+        document.getElementById("errors").innerHTML = "<h3>Error:</h3>" + "Verifique os campos em vermelho";
 
         return 0;
     }else{
-
-        // document.getElementById("errors").style.backgroundColor = "rgba(85, 85, 0.3)";
-        // document.getElementById("errors").style.color = "white";
-        // document.getElementById("errors").style.borderRadius = "13px";
-        // document.getElementById("errors").style.padding = "10px";
-        // document.getElementById("errors").style.magin = "10px";
-
         return 1;
     }
 }
