@@ -1,6 +1,4 @@
-var list = [
-    {"desc" : "rice", "amount" : "1", "value" : "5.40"},
-];
+var list = [];
 
 function getTotal(list)
 {
@@ -11,7 +9,7 @@ function getTotal(list)
         total += list[key].value * list[key].amount;
     }
 
-    return total;
+    document.getElementById("totalValue").innerHTML = formatValue(total);
 }
 
 function setList(list)
@@ -26,6 +24,9 @@ function setList(list)
     table += '</tbody>';
 
     document.getElementById("listTable").innerHTML = table;
+
+    getTotal(list);
+    saveListStorage(list);
 }
 
 function formatDesc(desc)
@@ -160,15 +161,45 @@ function validade()
         errors += '<p> Fill out a valid value </p>';
     }
 
-    if (errors === ""){
+    if (errors !== ""){
+        document.getElementById("errors").innerHTML = "<h3>Error:</h3>" + errors;
+
+        document.getElementById("errors").style.display = "block";
 
         return 0;
     }else{
-        document.getElementById("errors").style.display = "block";
-        document.getElementById("errors").innerHTML = "<h3>Error:</h3>" + errors;
+
+        // document.getElementById("errors").style.backgroundColor = "rgba(85, 85, 0.3)";
+        // document.getElementById("errors").style.color = "white";
+        // document.getElementById("errors").style.borderRadius = "13px";
+        // document.getElementById("errors").style.padding = "10px";
+        // document.getElementById("errors").style.magin = "10px";
+
         return 1;
     }
 }
 
-getTotal(list);
-setList(list);
+function deleteList() {
+    if(confirm("Delete this list?")){
+        list = [];
+        setList(list);
+    }
+}
+
+function saveListStorage(list) {
+    var jsonStr = JSON.stringify(list);
+
+    localStorage.setItem("list", jsonStr);
+}
+
+function initListStorage(){
+    var testList = localStorage.getItem("list");
+
+    if(testList){
+        list = JSON.parse(testList);
+    }
+
+    setList(list);
+}
+
+initListStorage();
